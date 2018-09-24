@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Rubik|Encode+Sans+Condensed|Source+Serif+Pro|PT+Mono');
+@import "display";
+@import "keypad";
+$ratio: 16/9;
+$mobile-width: 320px;
+$tablet-width: 60vw;
+
+body {
+  color: black;
+  background: white;
+  font-size: 1rem;
+  font-family: Rubik, Lato, "Source Serif Pro";
+  text-align: center;
+}
+#main-container {
+  display: flex;
+  justify-content: center;
+}
+
+#calculator {
+  display: grid;
+  background: rgb(84, 84, 84);
+  height: 800px;
+  width: 800px/$ratio;
+  grid-template-rows: 3fr 8fr;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+@media only screen and (max-width: 400px) {
+  #calculator {
+    height: $mobile-width*$ratio;
+    width: $mobile-width !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #calculator {
+    height: $tablet-width*$ratio;
+    width: $tablet-width;
+  }
+}

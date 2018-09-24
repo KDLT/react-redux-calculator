@@ -1,0 +1,21 @@
+#display {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  font-family: "PT Mono", "Souce Serif Pro";
+  text-align: right;
+  font-size: 2rem;
+  overflow: hidden;
+}
+
+#problem {
+  font-size: 1.8rem;
+  // border: 1px solid red;
+  overflow-wrap: break-word;
+  text-align: left;
+}
+
+#ans {
+  // border: 1px solid black;
+  overflow-wrap: break-word;
+  text-align: right;
+}
