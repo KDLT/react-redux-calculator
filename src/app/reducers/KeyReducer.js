@@ -245,7 +245,7 @@ const numStrToArray = (numberStr) => {
   let numArr = [];
   let numStrLength = numberStr.length;
   for (let i = 0; i < numStrLength; i++) {
-    numArr.push(numberStr[i])
+    numberArray.push(numberStr[i])
   };
-  return numArr
+  return numberArray
 };
