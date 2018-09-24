@@ -242,7 +242,7 @@ const removeCommas = (ansStr) => {
 
 // converts number string to an array
 const numStrToArray = (numberStr) => {
-  let numArr = [];
+  let numberArray = [];
   let numStrLength = numberStr.length;
   for (let i = 0; i < numStrLength; i++) {
     numberArray.push(numberStr[i])
