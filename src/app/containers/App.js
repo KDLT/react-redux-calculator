@@ -79,7 +79,7 @@ class App extends Component {
     // console.log("App props: ",this.props);
     // console.log("logic props: ",this.props.keys.logic);
     // console.log("display props: ",this.props.keys.display);
-    // console.log("keys props: ", this.props.keys);
+    console.log("keys props: ", this.props.keys);
   };
 
   render() {
