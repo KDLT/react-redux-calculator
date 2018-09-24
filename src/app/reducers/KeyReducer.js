@@ -83,16 +83,12 @@ const KeyReducer = (state = initialState, action) => {
         }
       }
     case RECORD_LAST_ANS:
-      let ansArr = [];
-      for (let i in state.display.ans) {
-        ansArr.push(state.display.ans[i])
-      }
-      // console.log(ansArr)
+      ans = removeCommas(state.display.ans);
       return {...state,
         logic: {
           ...state.logic,
           // recentAns: ansArr
-          recentAns: state.display.ans
+          recentAns: ans
         }
       }
     case DEL_KEY:
@@ -177,7 +173,6 @@ const KeyReducer = (state = initialState, action) => {
 export default KeyReducer;
 
 // helper function for attaching commas:
-
 const insertCommas = (numberArray) => {
   let isNegative = false;
   let hasDecimal = false;
@@ -234,6 +229,18 @@ const insertCommas = (numberArray) => {
   return commaAns; // a string
 }
 
+// removes commas
+const removeCommas = (ansStr) => {
+  let ansStrWithCommas = ansStr;
+  let ansArr = [];
+  for (let i in ansStrWithCommas) {
+    ansArr.push(ansStrWithCommas[i])
+  }
+  ansArr = ansArr.filter(digit => (digit !== ","));
+  return ansArr.join("");
+}
+
+// converts number string to an array
 const numStrToArray = (numberStr) => {
   let numArr = [];
   let numStrLength = numberStr.length;
