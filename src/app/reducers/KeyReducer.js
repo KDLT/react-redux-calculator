@@ -4,6 +4,8 @@ import {
   RECORD_NUM_LENGTH,
   DECIMAL_KEY,
   DEL_KEY,
+  DELETE_IN_PROBLEM,
+  DELETE_IN_ANS,
   CLEAR_ALL,
   CLEAR_ANS,
   EQUAL_KEY,
@@ -24,6 +26,7 @@ export const initialState = {
     numLengths: [],
     currentProblem: [],
     currentNumber: [],
+    currentAnsArr: [],
     recentKey: "",
     recentAns: ""
   }
@@ -67,19 +70,21 @@ const KeyReducer = (state = initialState, action) => {
         }
       }
     case EQUAL_KEY:
-      console.log("evaluate: ", state.display.problem);
+      // console.log("evaluate: ", state.display.problem);
+      currentNumLength = state.logic.currentNumber.length;
       let ans = eval(state.display.problem).toString();
-      let arrayVersion = numStrToArray(ans);
-      let ansWithCommas = insertCommas(arrayVersion);
+      let ansArray = numStrToArray(ans);
+      let ansWithCommas = insertCommas(ansArray);
       return {...state,
         display : {
-          problem: state.display.problem.concat("=").concat(ans),
+          ...state.display,
+          // problem: state.display.problem.concat("=").concat(ans),
           ans: ansWithCommas
         },
         logic: {
           ...state.logic,
-          currentProblem: [],
-          currentNumber: []
+          currentAnsArr: ansArray,
+          numLengths: state.logic.numLengths.concat(currentNumLength)
         }
       }
     case RECORD_LAST_ANS:
@@ -91,6 +96,22 @@ const KeyReducer = (state = initialState, action) => {
           recentAns: ans
         }
       }
+    case DELETE_IN_PROBLEM:
+      let currentProblemArray = state.logic.currentProblem
+      return {...state, 
+        logic: {
+          ...state.logic,
+          currentProblem: currentProblemArray.slice(0, currentProblemArray.length - 1)
+        }
+      }
+    case DELETE_IN_ANS:
+      let currentAns = state.logic.currentAnsArr;
+    return { ...state,
+      logic: {
+        ...state.logic,
+        currentAnsArr: currentAns.slice(0, currentAns.length - 1)
+      }
+    }
     case DEL_KEY:
       let problemStr = state.display.problem;
       let newProblemStr = ""; let newAns = "0";
@@ -128,11 +149,20 @@ const KeyReducer = (state = initialState, action) => {
         }
       }
     case RECORD_LAST_KEY:
+      // check if ENTER, DO NOT ADD it to problem array and number array
+      const concatCallback = (arrayToConcatenate, actionKey) => {
+        if (actionKey === "Enter") {
+          return arrayToConcatenate
+        }
+        else {
+          return arrayToConcatenate.concat(actionKey)
+        }
+      };
       return {...state,
         logic: {
           ...state.logic,
-          currentNumber: state.logic.currentNumber.concat(action.key),
-          currentProblem: state.logic.currentProblem.concat(action.key),
+          currentNumber: concatCallback(state.logic.currentNumber, action.key),
+          currentProblem: concatCallback(state.logic.currentProblem, action.key),
           recentKey: action.key
         }
       }
@@ -205,7 +235,7 @@ const insertCommas = (numberArray) => {
       // numberLength is a multiple of 3, do the following
       if (commaCounter % 3 == 0) {
         if (i == 0) { // at index = 0, DO NOT unshift a comma
-          console.log("i = 0, do nothing,")
+          // console.log("i = 0, do nothing,")
         }
         else { // other indices, safe to unshift a comma
           commaAns.unshift(",");
@@ -245,7 +275,9 @@ const numStrToArray = (numberStr) => {
   let numberArray = [];
   let numStrLength = numberStr.length;
   for (let i = 0; i < numStrLength; i++) {
-    numberArray.push(numberStr[i])
+    if (numberStr[i] !== ",") {
+      numberArray.push(numberStr[i])
+    }
   };
   return numberArray
 };

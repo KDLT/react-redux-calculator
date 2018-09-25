@@ -3,6 +3,8 @@ export const OPERATOR_KEY = "OPERATOR_KEY";
 export const DECIMAL_KEY = "DECIMAL_KEY";
 export const RECORD_NUM_LENGTH = "RECORD_NUM_LENGTH";
 export const DEL_KEY = "DEL_KEY";
+export const DELETE_IN_PROBLEM = "DELETE_PROBLEM";
+export const DELETE_IN_ANS = "DELETE_IN_ANS";
 export const CLEAR_ALL = "CLEAR_ALL";
 export const CLEAR_ANS = "CLEAR_ANS";
 export const EQUAL_KEY = "EQUAL_KEY";
@@ -127,11 +129,19 @@ export const recordLastAns = () => ({
   type: RECORD_LAST_ANS
 })
 
-export const concatEqualDisplay = () => (dispatch, getState) => {
+export const concatEqualDisplay = () => (dispatch) => {
   dispatch(equalKeyAction());
-  dispatch(recordLastInput("Enter"));
   dispatch(recordLastAns());
+  dispatch(recordLastInput("Enter"));
 }
+
+export const delInProblem = () => ({
+  type: DELETE_IN_PROBLEM
+});
+
+export const delInAns = () => ({
+  type: DELETE_IN_ANS
+})
 
 export const delKeyAction = () => ({
   type: DEL_KEY,
