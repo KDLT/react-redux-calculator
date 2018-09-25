@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 
 const Keys = (props) => {
-  let numbersRender = props.buttons.numbers_string.map((num, key) => (
-    <button id={props.buttons.numbers_id[num]}
+  let numbersRender = props.buttons.numbers.map((i, key) => (
+    <button id={i.id}
       onClick={props.handleClick}
       key={key}
-      data-payload={num}
+      data-payload={i.string}
       className={"number"}>
-      {num}
+      {i.string}
     </button>
   ));
 
-  let operationsRender = props.buttons.symbols.map((text, key) => (
-    <button id={props.buttons.operators[key]}
+  let operationsRender = props.buttons.operators.map((i, key) => (
+    <button id={i.id}
       onClick={props.handleClick}
       key={key}
-      data-payload={text}
+      data-payload={i.string}
       className={"operator"}>
-      {text}
+      {i.string}
     </button>
   ));
   return(

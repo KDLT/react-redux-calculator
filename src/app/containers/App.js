@@ -14,16 +14,17 @@ class App extends Component {
   };
 
   handleClick(e) {
-    let numberID = this.props.inputs.numbers_id;
     let buttonID = e.target.id;
+    let numbersID = this.props.inputs.numbers.map(i => i.id);
+    let operatorsID = this.props.inputs.operators.map(i => i.id);
     let buttonPayload = e.target.innerHTML;
     let buttonElement = document.getElementById(buttonID);
     // console.log("button ID: ", buttonID);
-    if (numberID.includes(buttonID)) {
+    if (numbersID.includes(buttonID)) {
       // console.log("a number was clicked");
       this.props.keyAction.concatNumberDisplay(buttonPayload);
     }
-    else if (this.props.inputs.operators.includes(buttonID)) {
+    else if (operatorsID.includes(buttonID)) {
       // console.log("an operator was clicked");
       this.props.keyAction.concatOperatorDisplay(buttonPayload);
     }
@@ -44,12 +45,14 @@ class App extends Component {
 
   handleKeyDown(e) { // keydown for everything else
     let keydownPayload = e.key;
+    let operatorsString = this.props.inputs.operators.map(i => i.string);
+    let numbersString = this.props.inputs.numbers.map(i => i.string);
     // console.log("keydownPayload on keydown: ", keydownPayload)
-    if (this.props.inputs.numbers_string.includes(keydownPayload)) {
+    if (numbersString.includes(keydownPayload)) {
       // console.log("a number key was pressed");
       this.props.keyAction.concatNumberDisplay(keydownPayload);
     }
-    else if (this.props.inputs.symbols.includes(keydownPayload)) {
+    else if (operatorsString.includes(keydownPayload)) {
       // console.log("an operator key was pressed");
       this.props.keyAction.concatOperatorDisplay(keydownPayload);
     }
@@ -76,10 +79,10 @@ class App extends Component {
   };
 
   componentDidUpdate() {
-    // console.log("App props: ",this.props);
-    // console.log("logic props: ",this.props.keys.logic);
+    console.log("App props: ",this.props);
+    console.log("logic props: ",this.props.keys.logic);
     // console.log("display props: ",this.props.keys.display);
-    console.log("keys props: ", this.props.keys);
+    // console.log("keys props: ", this.props.keys);
   };
 
   render() {

@@ -53,7 +53,7 @@ export const concatOperatorDisplay = (payload) => (dispatch, getState) => {
   let recentInput = currentProblem[currentProblem.length - 1];
   // recentKey includes all actions that happen
   let recentKey = getState().keys.logic.recentKey;
-  let operatorArray = getState().inputs.symbols;
+  let operatorArray = ["+", "-", "*", "/"];
   let allowedPrecedingOperators = ["+", "/", "*"];
 
   if (["Enter", "Escape"].includes(recentKey)) {
