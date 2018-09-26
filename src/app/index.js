@@ -13,7 +13,8 @@ import {
   concatDecimalDisplay,
   concatEqualDisplay,
   delKeyAction,
-  clearAllAction
+  clearAllAction,
+  ansKeyAction
 } from "./actions/KeyActions";
 
 const mapStateToProps = (state) => ({
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => ({
     concatEqualDisplay: () => dispatch(concatEqualDisplay()),
     delKeyAction: () => dispatch(delKeyAction()),
     clearAllAction: () => dispatch(clearAllAction()),
+    ansKeyAction: () => dispatch(ansKeyAction()),
   },
 })
 

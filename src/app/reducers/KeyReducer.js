@@ -28,7 +28,7 @@ export const initialState = {
     currentNumber: [],
     currentAnsArr: [],
     recentKey: "",
-    recentAns: ""
+    recentAns: "",
   }
 }
 
@@ -40,7 +40,7 @@ const KeyReducer = (state = initialState, action) => {
         display : {
           problem: state.display.problem.concat(action.key),
           ans: commaAns
-        }
+        },
       }
     case OPERATOR_KEY:
       return {...state,
@@ -72,7 +72,9 @@ const KeyReducer = (state = initialState, action) => {
     case EQUAL_KEY:
       // console.log("evaluate: ", state.display.problem);
       currentNumLength = state.logic.currentNumber.length;
-      let ans = eval(state.display.problem).toString();
+      problemStr = state.display.problem;
+      // problemStr = state.logic.currentProblem.join("");
+      let ans = eval(problemStr).toString();
       let ansArray = numStrToArray(ans);
       let ansWithCommas = insertCommas(ansArray);
       return {...state,
@@ -106,12 +108,12 @@ const KeyReducer = (state = initialState, action) => {
       }
     case DELETE_IN_ANS:
       let currentAns = state.logic.currentAnsArr;
-    return { ...state,
-      logic: {
-        ...state.logic,
-        currentAnsArr: currentAns.slice(0, currentAns.length - 1)
+      return { ...state,
+        logic: {
+          ...state.logic,
+          currentAnsArr: currentAns.slice(0, currentAns.length - 1)
+        }
       }
-    }
     case DEL_KEY:
       let problemStr = state.display.problem;
       let newProblemStr = ""; let newAns = "0";
@@ -119,6 +121,7 @@ const KeyReducer = (state = initialState, action) => {
       let numLengthsArr = state.logic.numLengths;
       let currentNumArr = state.logic.currentNumber;
       let lastNumLength = numLengthsArr[numLengthsArr.length - 1];
+      
       // kung naubusan na ng dinedelete, i-set na current number 'yung nauna
       if (currentNumArr.length == 0) {
         // gamit ang numLengths, kunin 'yung length ng huling entry
@@ -129,12 +132,20 @@ const KeyReducer = (state = initialState, action) => {
       };
       // habang more than 1 character pa ang natitira sa problem string
       if (state.display.problem.length > 1) {
-        console.log("hindi nga blanko");
+        if (state.logic.recentKey == "Enter") {
+          newAns = state.logic.currentAnsArr.join("");
+          newAns = newAns.slice(0, newAns.length - 1);
+        } else {
+          newAns = state.display.ans.slice(0, state.display.ans.length - 1);
+        }
         newProblemStr = problemStr.slice(0, problemStr.length - 1);
-        newAns = state.display.ans.slice(0, state.display.ans.length - 1);
+        
       } // kung isang character na lang natitira ta's binura pa,
       // i-zero na agad ang newAns
       else { newAns = "0"; };
+      if (state.display.ans.length <= 1) {
+        newAns = "0";
+      }
       return {...state,
         display: {
           problem: newProblemStr,

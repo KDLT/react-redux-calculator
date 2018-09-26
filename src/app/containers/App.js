@@ -17,7 +17,7 @@ class App extends Component {
     let buttonID = e.target.id;
     let numbersID = this.props.inputs.numbers.map(i => i.id);
     let operatorsID = this.props.inputs.operators.map(i => i.id);
-    let buttonPayload = e.target.innerHTML;
+    let buttonPayload = e.target.dataset.payload;
     let buttonElement = document.getElementById(buttonID);
     // console.log("button ID: ", buttonID);
     if (numbersID.includes(buttonID)) {
@@ -36,9 +36,15 @@ class App extends Component {
       // console.log("equal sign was clicked");
       this.props.keyAction.concatEqualDisplay();
     }
-    else if (buttonID == "clear") {
+    else if (buttonID == "all-clear") {
       // console.log("AC was clicked");
       this.props.keyAction.clearAllAction();
+    }
+    else if (buttonID == "del") {
+      this.props.keyAction.delKeyAction();
+    }
+    else if (buttonID == "answer") {
+      this.props.keyAction.ansKeyAction();
     }
     buttonElement.blur();
   };
@@ -70,6 +76,9 @@ class App extends Component {
     }
     else if (keydownPayload == "Backspace") {
       this.props.keyAction.delKeyAction();
+    }
+    else if (keydownPayload == "=") {
+      this.props.keyAction.ansKeyAction();
     }
   }
   componentDidMount() {

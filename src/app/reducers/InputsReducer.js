@@ -13,11 +13,19 @@ const initialState = {
     { id: "nine", string: "9" }
   ],
   operators: [
-    { id: "add", string: "+" },
-    { id: "subtract", string: "-" },
-    { id: "multiply", string: "*" },
-    { id: "divide", string: "/" },
+    { id: "add", string: "+", html: "\u002b" },
+    { id: "subtract", string: "-", html: "\u2212" },
+    { id: "multiply", string: "*", html: "\u00d7" },
+    { id: "divide", string: "/", html: "\u00f7" },
   ],
+  functions: [
+    { id: "all-clear", string: "AC" },
+    { id: "del", string: "DEL"  },
+    { id: "answer", string: "Ans" },
+    { id: "decimal", string: "." },
+    { id: "equals", string: "=", html: "\u003d"},
+    { id: "exp", string: "exp"},
+  ]
 }
 
 const InputsReducer = (state=initialState, action) => {

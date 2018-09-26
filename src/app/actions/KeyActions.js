@@ -8,6 +8,7 @@ export const DELETE_IN_ANS = "DELETE_IN_ANS";
 export const CLEAR_ALL = "CLEAR_ALL";
 export const CLEAR_ANS = "CLEAR_ANS";
 export const EQUAL_KEY = "EQUAL_KEY";
+export const ANS_KEY = "ANS_KEY";
 export const RECORD_LAST_ANS = "RECORD_LAST_ANS";
 export const RECORD_LAST_KEY = "RECORD_LAST_KEY";
 export const UNDO = "UNDO";
@@ -63,7 +64,7 @@ export const concatOperatorDisplay = (payload) => (dispatch, getState) => {
     let newAns = getState().keys.logic.recentAns
     // first clear everything then prepend the recently calculated ans
     dispatch(clearAllAction());
-    dispatch(numberKeyAction(newAns));
+    dispatch(concatNumberDisplay(newAns));
   };
 
     // if recentInput is indeed an operator
@@ -124,6 +125,10 @@ export const equalKeyAction = () => ({
   type: EQUAL_KEY,
   key: "Enter"
 })
+
+export const ansKeyAction = () => (dispatch, getState) => {
+  dispatch(concatNumberDisplay(getState().keys.logic.recentAns));
+}
 
 export const recordLastAns = () => ({
   type: RECORD_LAST_ANS
